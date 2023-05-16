@@ -1,5 +1,13 @@
+import { Layout, UserList } from "./components";
+
 function App() {
-  return <div className="font-bold text-red-500">asd</div>;
+  return (
+    <>
+      <Layout>
+        <UserList />
+      </Layout>
+    </>
+  );
 }
 
 export default App;

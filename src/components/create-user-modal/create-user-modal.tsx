@@ -38,11 +38,7 @@ const CreateUserModal = ({
     if (users.some((item) => item.email === user.email) === true) {
       setValidation(false);
       setErrorMessage("Такой email уже существует");
-    } else {
-      setValidation(true);
-      setErrorMessage("");
-    }
-    if (
+    } else if (
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email) === false
     ) {
       setValidation(false);

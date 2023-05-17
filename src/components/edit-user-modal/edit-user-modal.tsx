@@ -1,15 +1,48 @@
+import { useState, useEffect } from "react";
 import Select from "react-select";
+import { useDispatch } from "react-redux";
+import { editUser } from "../../store/actions/user-actions";
 import { IUser } from "../../types";
 
 const EditUserModal = ({
   showModal,
   setShowModal,
-  user,
+  userEmail,
+  initialUser,
 }: {
   showModal: boolean;
   setShowModal: any;
-  user: IUser;
+  userEmail: string;
+  initialUser: IUser;
 }) => {
+  const dispatch = useDispatch();
+  const [user, setUser] = useState<IUser>(initialUser);
+
+  let permissions: string[] = initialUser.permissions;
+
+  useEffect(() => {
+    permissions = initialUser.permissions;
+  }, [initialUser]);
+
+  let defaultValues: any = [];
+  initialUser.permissions.forEach((item) => {
+    defaultValues.push({ value: item, label: item });
+  });
+
+  const handleEdit = () => {
+    dispatch(editUser(userEmail, user));
+    setShowModal(false);
+  };
+
+  const handleSelectChange = (selected: any) => {
+    if (selected.length > 0) {
+      permissions = selected.map((item: any) => item.value);
+      setUser({ ...user, permissions: permissions });
+    } else {
+      setUser({ ...user, permissions: [] });
+    }
+  };
+
   return (
     <div
       className={`${
@@ -51,6 +84,8 @@ const EditUserModal = ({
                     type="text"
                     className="w-full border rounded-lg p-2 outline-none"
                     placeholder="Введите имя"
+                    value={user.name}
+                    onChange={(e) => setUser({ ...user, name: e.target.value })}
                   />
                 </div>
                 <div>
@@ -59,13 +94,26 @@ const EditUserModal = ({
                     type="email"
                     className="w-full border rounded-lg p-2 outline-none"
                     placeholder="Введите email"
+                    disabled
+                    value={user.email}
+                    onChange={(e) =>
+                      setUser({ ...user, email: e.target.value })
+                    }
                   />
                 </div>
                 <div>
                   <p className="font-semibold">Разрешения</p>
-                  <Select options={options} />
+                  <Select
+                    defaultValue={defaultValues || []}
+                    options={options}
+                    isMulti
+                    onChange={(e) => handleSelectChange(e)}
+                  />
                 </div>
-                <button className="w-full bg-accent text-white rounded-lg py-3 font-semibold">
+                <button
+                  onClick={handleEdit}
+                  className="w-full bg-accent text-white rounded-lg py-3 font-semibold"
+                >
                   Изменить данные пользователя
                 </button>
               </div>

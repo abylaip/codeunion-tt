@@ -4,17 +4,9 @@ import { RootState } from "../../store/store";
 import UserCard from "../user-card/user-card";
 import CreateUserModal from "../create-user-modal/create-user-modal";
 import { IUser } from "../../types";
-import EditUserModal from "../edit-user-modal/edit-user-modal";
 
 export const UserList = () => {
   const [showCreate, setShowCreate] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [user, setUser] = useState<IUser>({
-    email: "",
-    name: "",
-    permissions: [],
-    image: "",
-  });
   const users: IUser[] = useSelector((state: RootState) => state.users.users);
 
   return (
@@ -54,16 +46,9 @@ export const UserList = () => {
           email={item.email}
           permissions={item.permissions}
           image={item.image}
-          setShowEdit={setShowEdit}
-          setUser={setUser}
         />
       ))}
       <CreateUserModal setShowModal={setShowCreate} showModal={showCreate} />
-      <EditUserModal
-        setShowModal={setShowEdit}
-        showModal={showEdit}
-        user={user!}
-      />
     </div>
   );
 };

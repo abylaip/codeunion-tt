@@ -2,20 +2,21 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "../../store/actions/user-actions";
 import DeleteUserModal from "../delete-user-modal/delete-user-modal";
+import EditUserModal from "../edit-user-modal/edit-user-modal";
 
 interface UserProps {
   name: string;
   email: string;
   permissions: string[];
   image: string;
-  setShowEdit: any;
-  setUser: any;
 }
 
 const UserCard = (props: UserProps) => {
   const [showDropDown, setShowDropDown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [showDelete, setShowDelete] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -93,14 +94,13 @@ const UserCard = (props: UserProps) => {
       </button>
       <div
         ref={dropdownRef}
-        className={`flex flex-col overflow-hidden rounded-lg absolute right-3 bg-white top-10 shadow-xl ${
+        className={`flex flex-col overflow-hidden rounded-lg absolute z-30 right-3 bg-white top-10 shadow-xl ${
           showDropDown ? "block" : "hidden"
         }`}
       >
         <button
           onClick={() => {
-            props.setUser(props);
-            props.setShowEdit(true);
+            setShowEdit(true);
           }}
           className="py-2 px-3 hover:bg-slate-100 hover:text-accent"
         >
@@ -117,6 +117,12 @@ const UserCard = (props: UserProps) => {
         </button>
       </div>
       <DeleteUserModal setShowModal={setShowDelete} showModal={showDelete} />
+      <EditUserModal
+        setShowModal={setShowEdit}
+        showModal={showEdit}
+        initialUser={props}
+        userEmail={props.email}
+      />
     </div>
   );
 };

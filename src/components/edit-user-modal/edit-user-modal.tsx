@@ -1,11 +1,14 @@
 import Select from "react-select";
+import { IUser } from "../../types";
 
 const EditUserModal = ({
   showModal,
   setShowModal,
+  user,
 }: {
   showModal: boolean;
   setShowModal: any;
+  user: IUser;
 }) => {
   return (
     <div

@@ -1,5 +1,3 @@
-import Select from "react-select";
-
 const DeleteUserModal = ({
   showModal,
   setShowModal,
@@ -41,7 +39,10 @@ const DeleteUserModal = ({
               <p className="text-center text-2xl font-semibold text-accent mb-3">
                 Пользователь успешно удален
               </p>
-              <button className="w-full bg-accent text-white rounded-lg py-3 font-semibold">
+              <button
+                onClick={() => setShowModal(false)}
+                className="w-full bg-accent text-white rounded-lg py-3 font-semibold"
+              >
                 Закрыть
               </button>
             </div>

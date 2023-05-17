@@ -1,16 +1,24 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 import UserCard from "../user-card/user-card";
 import CreateUserModal from "../create-user-modal/create-user-modal";
+import { IUser } from "../../types";
 import EditUserModal from "../edit-user-modal/edit-user-modal";
-import DeleteUserModal from "../delete-user-modal/delete-user-modal";
 
 export const UserList = () => {
   const [showCreate, setShowCreate] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  const [user, setUser] = useState<IUser>({
+    email: "",
+    name: "",
+    permissions: [],
+    image: "",
+  });
+  const users: IUser[] = useSelector((state: RootState) => state.users.users);
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden">
+    <div className="bg-white rounded-2xl">
       <div className="flex flex-row justify-between items-center py-3 px-5">
         <p className="text-2xl font-semibold">Команда</p>
         <div className="flex flex-row space-x-3 items-center">
@@ -39,13 +47,23 @@ export const UserList = () => {
         </div>
       </div>
       <div className="h-[0.2px] bg-gray-300 w-full" />
-      <UserCard />
-      <UserCard />
-      <UserCard />
-      <UserCard />
+      {users.map((item, key) => (
+        <UserCard
+          key={key}
+          name={item.name}
+          email={item.email}
+          permissions={item.permissions}
+          image={item.image}
+          setShowEdit={setShowEdit}
+          setUser={setUser}
+        />
+      ))}
       <CreateUserModal setShowModal={setShowCreate} showModal={showCreate} />
-      <EditUserModal setShowModal={setShowEdit} showModal={showEdit} />
-      <DeleteUserModal setShowModal={setShowDelete} showModal={showDelete} />
+      <EditUserModal
+        setShowModal={setShowEdit}
+        showModal={showEdit}
+        user={user!}
+      />
     </div>
   );
 };

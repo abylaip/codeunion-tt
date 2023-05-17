@@ -116,13 +116,17 @@ const UserCard = (props: UserProps) => {
           Удалить
         </button>
       </div>
-      <DeleteUserModal setShowModal={setShowDelete} showModal={showDelete} />
-      <EditUserModal
-        setShowModal={setShowEdit}
-        showModal={showEdit}
-        initialUser={props}
-        userEmail={props.email}
-      />
+      {showDelete && (
+        <DeleteUserModal setShowModal={setShowDelete} showModal={showDelete} />
+      )}
+      {showEdit && (
+        <EditUserModal
+          setShowModal={setShowEdit}
+          showModal={showEdit}
+          initialUser={props}
+          userEmail={props.email}
+        />
+      )}
     </div>
   );
 };

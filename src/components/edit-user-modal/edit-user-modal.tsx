@@ -92,7 +92,7 @@ const EditUserModal = ({
                   <p className="font-semibold">Email</p>
                   <input
                     type="email"
-                    className="w-full border rounded-lg p-2 outline-none"
+                    className="w-full border rounded-lg p-2 outline-none cursor-not-allowed"
                     placeholder="Введите email"
                     disabled
                     value={user.email}

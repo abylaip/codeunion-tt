@@ -48,7 +48,9 @@ export const UserList = () => {
           image={item.image}
         />
       ))}
-      <CreateUserModal setShowModal={setShowCreate} showModal={showCreate} />
+      {showCreate && (
+        <CreateUserModal setShowModal={setShowCreate} showModal={showCreate} />
+      )}
     </div>
   );
 };

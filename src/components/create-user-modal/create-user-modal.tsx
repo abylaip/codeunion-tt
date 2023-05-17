@@ -35,18 +35,18 @@ const CreateUserModal = ({
   let permissions: string[] = [];
 
   useEffect(() => {
+    if (users.some((item) => item.email === user.email) === true) {
+      setValidation(false);
+      setErrorMessage("Такой email уже существует");
+    } else {
+      setValidation(true);
+      setErrorMessage("");
+    }
     if (
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email) === false
     ) {
       setValidation(false);
       setErrorMessage("Неправильный формат");
-    } else {
-      setValidation(true);
-      setErrorMessage("");
-    }
-    if (users.some((item) => item.email === user.email) === true) {
-      setValidation(false);
-      setErrorMessage("Такой email уже существует");
     } else {
       setValidation(true);
       setErrorMessage("");
